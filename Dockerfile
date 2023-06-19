@@ -8,7 +8,7 @@ ENV PYTHONUNBUFFERED 1
 
 WORKDIR /code
 
-COPY requirements.txt .
+COPY todolist/requirements.txt .
 RUN pip install --no-cache -r requirements.txt
 
 COPY . .

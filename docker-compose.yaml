@@ -6,10 +6,10 @@ volumes:
 
 services:
   migrate:
-    image: zeroxfuumanze/django_app
+    build: .
     env_file:
-      - ../.env
-    command: python manage.py migrate
+      - .env
+    command: python todolist/manage.py migrate
     volumes:
       - local_migration_data:/migrations/
     depends_on:
@@ -18,14 +18,14 @@ services:
 
   api:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python todolist/manage.py runserver 0.0.0.0:8000
     depends_on:
       db:
         condition: service_healthy
       migrate:
         condition: service_completed_successfully
     env_file:
-      - ../.env
+      - .env
     ports:
       - "8000:8000"
 
@@ -34,7 +34,7 @@ services:
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
     env_file:
-      - ../.env
+      - .env
     ports:
       - "5432:5432"
     restart: "always"
