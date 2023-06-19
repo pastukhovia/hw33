@@ -7,6 +7,14 @@ volumes:
 services:
   migrate:
     image: $IMAGE_TAG:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    environment:
+      - DEBUG=$DEBUG
+      - SECRET_KEY=$SECRET_KEY
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - POSTGRES_DB=$POSTGRES_DB
+      - DB_HOST=db
+      - DB_PORT=5432
     command: python todolist/manage.py migrate
     volumes:
       - ./local_migration_data:/var/lib/postgresql/data/migrations/
@@ -16,20 +24,20 @@ services:
 
   api:
     image: $IMAGE_TAG:$GITHUB_REF_NAME-$GITHUB_RUN_ID
-    command: python todolist/manage.py runserver 0.0.0.0:8000
-    depends_on:
-      db:
-        condition: service_healthy
-      migrate:
-        condition: service_completed_successfully
     environment:
-      - DEBUG=True
+      - DEBUG=$DEBUG
       - SECRET_KEY=$SECRET_KEY
       - POSTGRES_USER=$POSTGRES_USER
       - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
       - POSTGRES_DB=$POSTGRES_DB
       - DB_HOST=db
       - DB_PORT=5432
+    command: python todolist/manage.py runserver 0.0.0.0:8000
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
     ports:
       - "8000:8000"
 

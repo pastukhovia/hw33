@@ -23,6 +23,7 @@ jobs:
       DB_HOST: db
       DB_PORT: 5432
       IMAGE_TAG: ${{ secrets.IMAGE_TAG }}
+      DEBUG: False
     steps:
       - name: checkout
         uses: actions/checkout@v2
