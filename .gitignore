@@ -130,3 +130,6 @@ dmypy.json
 /.vscode/
 /.idea/
 .DS_Store
+
+local_migration_data/
+local_postgres_data/

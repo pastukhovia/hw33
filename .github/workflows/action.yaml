@@ -12,3 +12,39 @@ jobs:
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin
       - name: push
         run: docker push ${{ secrets.IMAGE_TAG }}:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      DB_HOST: db
+      DB_PORT: 5432
+      IMAGE_TAG: ${{ secrets.IMAGE_TAG }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: create compose file
+        run: | 
+          mkdir deploy
+          cat docker-compose-ci.yaml | envsubst deploy/docker-compose.yaml
+      - name: clone files to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          source: "deploy/docker-compose.yaml"
+          target: "todolist"
+          strip_components: 1
+      - name: run docker-compose
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd todolist
+            echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker-compose up -d
