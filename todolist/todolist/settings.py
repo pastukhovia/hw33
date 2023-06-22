@@ -136,4 +136,5 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-
+SOCIAL_AUTH_VK_OAUTH2_KEY = '51685618'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'K7v4hgrPl0KfKDPogt9H'
