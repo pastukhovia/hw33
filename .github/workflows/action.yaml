@@ -23,6 +23,8 @@ jobs:
       DB_HOST: db
       DB_PORT: 5432
       IMAGE_TAG: ${{ secrets.IMAGE_TAG }}
+      SOCIAL_AUTH_VK_OAUTH2_SECRET: ${{ secrets.SOCIAL_AUTH_VK_OAUTH2_SECRET }}
+      SOCIAL_AUTH_VK_OAUTH2_KEY: ${{ secrets.SOCIAL_AUTH_VK_OAUTH2_KEY }}
       DEBUG: False
     steps:
       - name: checkout
