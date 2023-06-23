@@ -1,7 +1,5 @@
 import django.core.exceptions
-from django.contrib.auth.hashers import check_password
 from django.contrib.auth.password_validation import validate_password
-from django.http import JsonResponse
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 

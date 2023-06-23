@@ -45,7 +45,7 @@ services:
       retries: 5
 
   front:
-    image: sermalenk/skypro-front:lesson-34
+    image: sermalenk/skypro-front:lesson-36
     depends_on:
       - api
     ports:

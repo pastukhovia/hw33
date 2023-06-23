@@ -22,7 +22,13 @@ class UserLogin(APIView):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return JsonResponse({"response": ["OK"]}, status=200)
+            return JsonResponse({
+                'id': user.pk,
+                'username': user.username,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email
+            }, status=200)
         return JsonResponse({"response": ["Wrong credentials"]}, status=400)
 
 
