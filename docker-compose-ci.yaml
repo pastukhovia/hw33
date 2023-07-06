@@ -23,6 +23,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    restart: "always"
 
   api:
     image: $IMAGE_TAG:$GITHUB_REF_NAME-$GITHUB_RUN_ID
@@ -44,6 +45,7 @@ services:
         condition: service_completed_successfully
     ports:
       - "8000:8000"
+    restart: "always"
 
   db:
     image: postgres:latest
@@ -65,8 +67,9 @@ services:
       retries: 5
 
   front:
-    image: sermalenk/skypro-front:lesson-37
+    image: sermalenk/skypro-front:lesson-38
     depends_on:
       - api
     ports:
       - "80:80"
+    restart: "always"
