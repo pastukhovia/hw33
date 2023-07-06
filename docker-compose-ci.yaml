@@ -91,9 +91,9 @@ services:
       - TG_BOT_KEY=$TG_BOT_KEY
     command: python todolist/manage.py runbot
     depends_on:
-      postgres:
+      db:
         condition: service_healthy
-      migrations:
+      migrate:
         condition: service_completed_successfully
       api:
         condition: service_started
