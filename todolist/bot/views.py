@@ -1,9 +1,13 @@
+import os
+
 from rest_framework.generics import UpdateAPIView, get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 
-from .management.commands.runbot import tg_client
+from .tg.client import TgClient
 from .models import TgUser
 from .serializers import TgUserUpdateSerializer
+
+tg_client = TgClient(os.getenv('TG_BOT_KEY'))
 
 
 class BotVerifyView(UpdateAPIView):
