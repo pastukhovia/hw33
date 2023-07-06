@@ -62,7 +62,7 @@ class Goal(DatesModelMixin):
     user = models.ForeignKey(User, verbose_name="Автор", on_delete=models.PROTECT)
     category = models.ForeignKey(GoalCategory, verbose_name='Категория', on_delete=models.PROTECT)
     title = models.CharField(verbose_name="Название", max_length=255)
-    description = models.TextField(verbose_name='Описание')
+    description = models.TextField(verbose_name='Описание', null=True)
     status = models.PositiveIntegerField(verbose_name='Статус', choices=Status.choices, default=Status.to_do)
     priority = models.PositiveIntegerField(verbose_name='Приоритет', choices=Priority.choices, default=Priority.medium)
     due_date = models.DateTimeField(verbose_name='Дата дедлайна', null=True)

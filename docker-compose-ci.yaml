@@ -17,6 +17,7 @@ services:
       - SOCIAL_AUTH_VK_OAUTH2_KEY=$SOCIAL_AUTH_VK_OAUTH2_KEY
       - DB_HOST=db
       - DB_PORT=5432
+      - TG_BOT_KEY=$TG_BOT_KEY
     command: python todolist/manage.py migrate
     volumes:
       - ./local_migration_data:/var/lib/postgresql/data/migrations/
@@ -37,6 +38,7 @@ services:
       - SOCIAL_AUTH_VK_OAUTH2_KEY=$SOCIAL_AUTH_VK_OAUTH2_KEY
       - DB_HOST=db
       - DB_PORT=5432
+      - TG_BOT_KEY=$TG_BOT_KEY
     command: python todolist/manage.py runserver 0.0.0.0:8000
     depends_on:
       db:
@@ -73,3 +75,25 @@ services:
     ports:
       - "80:80"
     restart: "always"
+
+  bot:
+    build: .
+    environment:
+      - DEBUG=$DEBUG
+      - SECRET_KEY=$SECRET_KEY
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - POSTGRES_DB=$POSTGRES_DB
+      - SOCIAL_AUTH_VK_OAUTH2_SECRET=$SOCIAL_AUTH_VK_OAUTH2_SECRET
+      - SOCIAL_AUTH_VK_OAUTH2_KEY=$SOCIAL_AUTH_VK_OAUTH2_KEY
+      - DB_HOST=db
+      - DB_PORT=5432
+      - TG_BOT_KEY=$TG_BOT_KEY
+    command: python todolist/manage.py runbot
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrations:
+        condition: service_completed_successfully
+      api:
+        condition: service_started
