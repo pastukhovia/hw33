@@ -25,6 +25,7 @@ jobs:
       IMAGE_TAG: ${{ secrets.IMAGE_TAG }}
       SOCIAL_AUTH_VK_OAUTH2_SECRET: ${{ secrets.SOCIAL_AUTH_VK_OAUTH2_SECRET }}
       SOCIAL_AUTH_VK_OAUTH2_KEY: ${{ secrets.SOCIAL_AUTH_VK_OAUTH2_KEY }}
+      TG_BOT_KEY: ${{ secrets.TG_BOT_KEY }}
       DEBUG: False
     steps:
       - name: checkout
