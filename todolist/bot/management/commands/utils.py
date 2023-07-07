@@ -31,7 +31,6 @@ def commands(x, user, chat_id):
                     chat_id=chat_id,
                     text='У вас нет созданных целей'
                 )
-
                 return 1
         case '/create':
             tg_client.send_message(
@@ -56,15 +55,15 @@ def commands(x, user, chat_id):
                     chat_id=chat_id,
                     text='У вас нет созданных категорий'
                 )
-
                 return 1
 
             category_input = ''
             while category_input not in category_names:
+                time.sleep(0.5)
                 try:
                     category_input = tg_client.get_updates().result[-1]['message']['text']
                 except:
-                    category_input = ''
+                    tg_client.get_updates().result[-1]['message']['text'] = ''
                 if category_input == '/cancel':
                     tg_client.send_message(
                         chat_id=chat_id,
@@ -84,10 +83,11 @@ def commands(x, user, chat_id):
 
             goal_input = category_input
             while goal_input == category_input:
+                time.sleep(0.5)
                 try:
                     goal_input = tg_client.get_updates().result[-1]['message']['text']
                 except:
-                    goal_input = ''
+                    tg_client.get_updates().result[-1]['message']['text'] = ''
                 if goal_input == '/cancel':
                     tg_client.send_message(
                         chat_id=chat_id,

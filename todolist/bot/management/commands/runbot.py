@@ -43,14 +43,4 @@ while True:
                      f'Для подтверждения необходимо ввести код: {cur_user.verification_code} на сайте'
             )
         else:
-            if user_input in commands_list:
-                commands(user_input, cur_user, chat_id)
-                tg_client.send_message(
-                    chat_id=chat_id,
-                    text='Введите команду'
-                )
-            else:
-                tg_client.send_message(
-                    chat_id=chat_id,
-                    text='Неизвестная команда'
-                )
+            commands(user_input, cur_user, chat_id)
