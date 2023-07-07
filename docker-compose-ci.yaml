@@ -24,7 +24,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    restart: "always"
 
   api:
     image: $IMAGE_TAG:$GITHUB_REF_NAME-$GITHUB_RUN_ID
@@ -97,3 +96,4 @@ services:
         condition: service_completed_successfully
       api:
         condition: service_started
+    restart: "always"
