@@ -3,8 +3,6 @@ from .models import BoardParticipant
 
 
 class CanCreateCategory(permissions.BasePermission):
-    message = 'Readers cannot create category'
-
     def has_permission(self, request, view):
         return BoardParticipant.objects.filter(
             user=request.user, board=request.data['board'], role=BoardParticipant.Role.owner
@@ -14,8 +12,6 @@ class CanCreateCategory(permissions.BasePermission):
 
 
 class BoardPermissions(permissions.BasePermission):
-    message = 'Only owners of boards can edit it'
-
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return BoardParticipant.objects.filter(
@@ -27,8 +23,6 @@ class BoardPermissions(permissions.BasePermission):
 
 
 class CanEditCategory(permissions.BasePermission):
-    message = 'Readers cannot edit categories'
-
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return BoardParticipant.objects.filter(

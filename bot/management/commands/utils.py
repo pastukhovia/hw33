@@ -1,17 +1,17 @@
+import os
+import secrets
 import string
-import random
 import time
 
 from goals.models import Status, Goal, GoalCategory
 from ...tg.client import TgClient
-import os
 
 tg_client = TgClient(os.getenv('TG_BOT_KEY'))
 
 
 def generate_code(length):
-    letters = string.ascii_letters + string.digits
-    return ''.join(random.choices(letters, k=length))
+    alphabet = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(alphabet) for i in range(length))
 
 
 def commands(x, user, chat_id):

@@ -18,7 +18,7 @@ services:
       - DB_HOST=db
       - DB_PORT=5432
       - TG_BOT_KEY=$TG_BOT_KEY
-    command: python todolist/manage.py migrate
+    command: python manage.py migrate
     volumes:
       - ./local_migration_data:/var/lib/postgresql/data/migrations/
     depends_on:
@@ -38,7 +38,7 @@ services:
       - DB_HOST=db
       - DB_PORT=5432
       - TG_BOT_KEY=$TG_BOT_KEY
-    command: python todolist/manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
     depends_on:
       db:
         condition: service_healthy
@@ -88,7 +88,7 @@ services:
       - DB_HOST=db
       - DB_PORT=5432
       - TG_BOT_KEY=$TG_BOT_KEY
-    command: python todolist/manage.py runbot
+    command: python manage.py runbot
     depends_on:
       db:
         condition: service_healthy

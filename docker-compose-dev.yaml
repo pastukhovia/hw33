@@ -9,7 +9,7 @@ services:
     build: .
     env_file:
       - .env
-    command: python todolist/manage.py migrate
+    command: python manage.py migrate
     volumes:
       - ./local_migration_data:/var/lib/postgresql/data/migrations/
     depends_on:
@@ -20,7 +20,7 @@ services:
     build: .
     env_file:
       - .env
-    command: python todolist/manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
     depends_on:
       postgres:
         condition: service_healthy
@@ -55,7 +55,7 @@ services:
     build: .
     env_file:
       - .env
-    command: python todolist/manage.py runbot
+    command: python manage.py runbot
     depends_on:
       postgres:
         condition: service_healthy

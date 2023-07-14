@@ -1,5 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.hashers import check_password
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -42,7 +44,7 @@ class UserProfileView(RetrieveUpdateDestroyAPIView):
 
     def delete(self, request, *args, **kwargs):
         logout(request)
-        return JsonResponse({"response": ["OK"]}, status=204)
+        return JsonResponse({"response": []}, status=204)
 
 
 class ChangePasswordView(UpdateAPIView):
@@ -51,4 +53,3 @@ class ChangePasswordView(UpdateAPIView):
 
     def get_object(self):
         return self.request.user
-
